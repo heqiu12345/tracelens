@@ -1,0 +1,29 @@
+{
+  "name": "tracelens",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A pluggable, human-readable review & scoring layer for LLM traces — make any Langfuse project reviewable by non-engineers.",
+  "type": "module",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "verify:example": "node examples/custom-tag-chatbot/verify.ts",
+    "verify:adapter": "node packages/adapter-langfuse/verify.ts",
+    "verify:ui": "node packages/review-ui/verify.ts",
+    "verify:calibration": "node packages/adapter-langfuse/calibration-verify.ts",
+    "verify:cal-ui": "node packages/review-ui/calibration-ui-verify.ts",
+    "verify:cal-data": "node apps/review-server/calibration-data-verify.ts",
+    "verify": "node examples/custom-tag-chatbot/verify.ts && node packages/adapter-langfuse/verify.ts && node packages/review-ui/verify.ts && node packages/adapter-langfuse/calibration-verify.ts && node packages/review-ui/calibration-ui-verify.ts && node apps/review-server/calibration-data-verify.ts",
+    "demo": "node demo/build.ts",
+    "review": "node apps/review-server/src/server.ts",
+    "langfuse:smoke": "node packages/adapter-langfuse/smoke.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "license": "MIT",
+  "author": "heqiu12345",
+  "repository": "github:heqiu12345/tracelens",
+  "homepage": "https://github.com/heqiu12345/tracelens#readme"
+}

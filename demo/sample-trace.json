@@ -1,0 +1,13 @@
+{
+  "id": "demo-trace-001",
+  "sessionId": "demo-session-coast",
+  "tags": ["structured-agent-v1"],
+  "raw": {
+    "messages": [
+      { "role": "user", "content": "Help me compare two weekend getaway options near the coast." },
+      { "role": "assistant", "tool_calls": [{ "id": "call_1", "function": { "name": "search_trips", "arguments": "{\"area\":\"coast\",\"days\":2}" } }] },
+      { "role": "tool", "tool_call_id": "call_1", "content": "{\"trips\":[{\"id\":\"T-218\",\"title\":\"Cliffside Escape\"},{\"id\":\"T-477\",\"title\":\"Island Hopper\"}]}" },
+      { "role": "assistant", "content": "{\"type\":\"comparison\",\"options\":[\"Cliffside Escape\",\"Island Hopper\"],\"rows\":[{\"dim\":\"Pace\",\"cells\":[{\"title\":\"Relaxed\",\"text\":\"2 stops per day\",\"tag\":\"easy\"},{\"title\":\"Packed\",\"text\":\"5 stops per day\",\"tag\":\"intense\"}]},{\"dim\":\"Price\",\"cells\":[{\"title\":\"$180\"},{\"title\":\"$240\",\"tag\":\"pricey\"}]},{\"dim\":\"Best for\",\"cells\":[{\"title\":\"Slow weekend\"},{\"title\":\"Seeing more\"}]}],\"summary\":\"Pick **Cliffside Escape** for a slow, scenic weekend; choose **Island Hopper** if you'd rather see more in two days.\"}" }
+    ]
+  }
+}

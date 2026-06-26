@@ -1,0 +1,12 @@
+{
+  "name": "@tracelens/adapter-langfuse",
+  "version": "0.0.1",
+  "description": "Langfuse DataSource adapter for tracelens — zero deps, uses the Langfuse public REST API. Ships a default renderer for out-of-the-box readable conversations.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": ["src"],
+  "license": "MIT",
+  "author": "heqiu12345"
+}

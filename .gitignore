@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+.idea/
+*.log
+.env
+.superpowers/
+
+# Process / spec artifacts — kept locally, not shipped in the repo
+openspec/
+docs/superpowers/

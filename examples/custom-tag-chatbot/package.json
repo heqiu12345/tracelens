@@ -1,0 +1,8 @@
+{
+  "name": "@tracelens/example-custom-tag-chatbot",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Reference Renderer — a chatbot whose replies embed a custom-tag protocol (comparison tables, product refs) → ConversationView. Proves the core contracts handle a real, complex agent.",
+  "license": "MIT"
+}

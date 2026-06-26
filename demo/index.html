@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>tracelens demo</title><style>
+:root{--bg:#f6f8fa;--card:#fff;--border:#e6e9ee;--text:#1f2733;--text2:#5b6472;--accent:#2563eb;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+*{box-sizing:border-box}
+.tl-conv{display:flex;flex-direction:column;gap:12px}
+.tl-turn{border:1px solid var(--border);border-radius:12px;background:var(--card);padding:10px 14px}
+.tl-user{background:#eff5ff;border-color:#dbe7ff}
+.tl-tool{background:#fafbfc}
+.tl-turn-head{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:flex;gap:8px;align-items:center}
+.tl-turn-agent{font-weight:500;color:var(--accent);background:#e8f0fe;padding:1px 8px;border-radius:10px;font-size:11px}
+.tl-mbs{display:inline-flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.tl-mb{font-size:10px;color:var(--text2);background:#eef1f5;border-radius:5px;padding:0 6px;font-weight:500;white-space:nowrap}
+.tl-mb-type{background:#e8eefb;color:#3551b5}
+.tl-mb-err{background:#fdecea;color:#c0392b}
+.tl-text,.tl-md{font-size:14px}
+.tl-md p{margin:.3em 0}.tl-md ul{margin:.3em 0;padding-left:1.3em}
+.tl-code{background:#0f172a;color:#e2e8f0;padding:10px 12px;border-radius:8px;overflow:auto;font-family:var(--mono);font-size:12px;margin:6px 0}
+.tl-card{border:1px solid var(--border);border-radius:10px;padding:8px 10px;margin:4px 0;background:#fcfdff}
+.tl-card-title{font-weight:600;font-size:13px}.tl-card-title a{color:var(--accent);text-decoration:none}
+.tl-card-sub{color:var(--text2);font-size:12px}
+.tl-card-body{font-size:12.5px;color:var(--text2);margin-top:3px}
+.tl-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.tl-badge{padding:1px 7px;border-radius:6px;font-size:11px;font-weight:600}
+.tl-tool{border:1px dashed #c7cdd6;border-radius:10px;padding:8px 10px;margin:6px 0;background:#fff}
+.tl-tool-head{font-size:12.5px}
+.tl-tool-st{color:var(--text2);font-size:11px;border:1px solid var(--border);border-radius:6px;padding:0 6px;margin-left:6px}
+.tl-tool-res{margin-top:4px}
+/* Agent process tree (observations): collapsible section; each step is a full, always-expanded turn (indented by depth) */
+.tl-steps{margin-top:12px;border:1px solid var(--border);border-radius:12px;background:#fbfcfe;padding:2px 6px}
+.tl-steps-sum{cursor:pointer;font-size:12px;font-weight:700;color:var(--text2);padding:8px;list-style:none;user-select:none}
+.tl-steps-sum::-webkit-details-marker{display:none}
+.tl-steps-sum::before{content:'▸ ';color:var(--accent)}
+.tl-steps[open] .tl-steps-sum::before{content:'▾ '}
+.tl-steps-sum:hover{color:var(--text)}
+.tl-steps-body{display:flex;flex-direction:column;gap:6px;padding:2px 4px 10px}
+.tl-steps .tl-turn{padding:6px 10px;border-radius:9px}
+.tl-steps .tl-turn-head{font-size:11px;margin-bottom:4px}
+.tl-steps .tl-text,.tl-steps .tl-md{font-size:12.5px}
+.tl-steps .tl-tool{margin:4px 0}
+.tl-steps .tl-code{font-size:11px;padding:8px 10px}
+.tl-table{border-collapse:collapse;width:100%;font-size:12.5px;margin:6px 0}
+.tl-table th,.tl-table td{border:1px solid var(--border);padding:7px 10px;vertical-align:top;text-align:left}
+.tl-table th{background:#f0f3f7;font-weight:600}
+.tl-table td.tl-dim{font-weight:600;background:#f7f9fb;white-space:nowrap}
+.tl-hr{border:none;border-top:1px solid var(--border);margin:8px 0}
+.tl-img,.tl-card-img{max-width:100%;border-radius:8px}
+.tl-conv-title{font-size:13px;color:var(--text2);margin-bottom:4px}
+.tl-score{border:1px solid var(--border);border-radius:12px;background:var(--card);padding:14px 16px}
+.tl-score-head{font-weight:700;margin-bottom:10px}.tl-score-head code{background:#eef1f5;padding:1px 6px;border-radius:5px;font-size:12px}
+.tl-dim-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid #f0f2f5}
+.tl-dim-label{font-size:13px;font-weight:500}.tl-dim-desc{display:block;font-weight:400;color:var(--text2);font-size:11px}
+.tl-opts{display:flex;gap:6px;flex-wrap:wrap}
+.tl-opt{border:1px solid var(--border);background:#fff;border-radius:8px;padding:4px 11px;cursor:pointer;font-size:13px}
+.tl-opt:hover{border-color:var(--accent);color:var(--accent)}
+.tl-comment{width:100%;margin-top:10px;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:12.5px;min-height:54px;font-family:inherit;resize:vertical}
+.tl-submit{margin-top:8px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600;font-size:13px}
+
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'PingFang SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+.tl-demo{max-width:1180px;margin:0 auto;padding:24px}
+.tl-h{display:flex;align-items:baseline;gap:10px}.tl-h h1{font-size:22px;margin:0}.tl-h .tag{background:#111827;color:#fff;font-size:11px;padding:2px 8px;border-radius:10px}
+.tl-sub{color:var(--text2);margin:4px 0 18px}
+.tl-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.tl-pane h2{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);margin:0 0 8px}
+.tl-raw{background:#0f172a;color:#cbd5e1;border-radius:12px;padding:14px;font-family:var(--mono);font-size:11.5px;overflow:auto;max-height:600px;white-space:pre-wrap;word-break:break-word}
+.tl-after{margin-top:20px}
+.tl-foot{margin-top:22px;color:var(--text2);font-size:12px;text-align:center}
+@media(max-width:860px){.tl-cols{grid-template-columns:1fr}}
+</style></head><body><div class="tl-demo">
+<div class="tl-h"><h1>tracelens</h1><span class="tag">demo</span></div>
+<p class="tl-sub">Same trace, two views — raw observability JSON vs. a human-reviewable conversation. No backend, no build.</p>
+<div class="tl-cols">
+<div class="tl-pane"><h2>&#9312; Raw trace · what an observability tool shows</h2><div class="tl-raw">{
+  &quot;messages&quot;: [
+    {
+      &quot;role&quot;: &quot;user&quot;,
+      &quot;content&quot;: &quot;Help me compare two weekend getaway options near the coast.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;assistant&quot;,
+      &quot;tool_calls&quot;: [
+        {
+          &quot;id&quot;: &quot;call_1&quot;,
+          &quot;function&quot;: {
+            &quot;name&quot;: &quot;search_trips&quot;,
+            &quot;arguments&quot;: &quot;{\&quot;area\&quot;:\&quot;coast\&quot;,\&quot;days\&quot;:2}&quot;
+          }
+        }
+      ]
+    },
+    {
+      &quot;role&quot;: &quot;tool&quot;,
+      &quot;tool_call_id&quot;: &quot;call_1&quot;,
+      &quot;content&quot;: &quot;{\&quot;trips\&quot;:[{\&quot;id\&quot;:\&quot;T-218\&quot;,\&quot;title\&quot;:\&quot;Cliffside Escape\&quot;},{\&quot;id\&quot;:\&quot;T-477\&quot;,\&quot;title\&quot;:\&quot;Island Hopper\&quot;}]}&quot;
+    },
+    {
+      &quot;role&quot;: &quot;assistant&quot;,
+      &quot;content&quot;: &quot;{\&quot;type\&quot;:\&quot;comparison\&quot;,\&quot;options\&quot;:[\&quot;Cliffside Escape\&quot;,\&quot;Island Hopper\&quot;],\&quot;rows\&quot;:[{\&quot;dim\&quot;:\&quot;Pace\&quot;,\&quot;cells\&quot;:[{\&quot;title\&quot;:\&quot;Relaxed\&quot;,\&quot;text\&quot;:\&quot;2 stops per day\&quot;,\&quot;tag\&quot;:\&quot;easy\&quot;},{\&quot;title\&quot;:\&quot;Packed\&quot;,\&quot;text\&quot;:\&quot;5 stops per day\&quot;,\&quot;tag\&quot;:\&quot;intense\&quot;}]},{\&quot;dim\&quot;:\&quot;Price\&quot;,\&quot;cells\&quot;:[{\&quot;title\&quot;:\&quot;$180\&quot;},{\&quot;title\&quot;:\&quot;$240\&quot;,\&quot;tag\&quot;:\&quot;pricey\&quot;}]},{\&quot;dim\&quot;:\&quot;Best for\&quot;,\&quot;cells\&quot;:[{\&quot;title\&quot;:\&quot;Slow weekend\&quot;},{\&quot;title\&quot;:\&quot;Seeing more\&quot;}]}],\&quot;summary\&quot;:\&quot;Pick **Cliffside Escape** for a slow, scenic weekend; choose **Island Hopper** if you&#39;d rather see more in two days.\&quot;}&quot;
+    }
+  ]
+}</div></div>
+<div class="tl-pane"><h2>&#9313; tracelens · human-reviewable conversation</h2><div class="tl-conv"><div class="tl-conv-title">Structured agent · trip comparison</div><div class="tl-turn tl-user"><div class="tl-turn-head">👤 User</div><div class="tl-turn-body"><div class="tl-text">Help me compare two weekend getaway options near the coast.</div></div></div><div class="tl-turn tl-assistant"><div class="tl-turn-head">🤖 Assistant</div><div class="tl-turn-body"><div class="tl-tool"><div class="tl-tool-head">🔧 <b>search_trips</b><span class="tl-tool-st">ok</span></div><pre class="tl-code"><code>{
+  &quot;area&quot;: &quot;coast&quot;,
+  &quot;days&quot;: 2
+}</code></pre></div></div></div><div class="tl-turn tl-tool"><div class="tl-turn-head">🔧 Tool</div><div class="tl-turn-body"><div class="tl-tool"><div class="tl-tool-head">🔧 <b>tool result</b><span class="tl-tool-st">ok</span></div><div class="tl-tool-res"><pre class="tl-code"><code>{
+  &quot;trips&quot;: [
+    {
+      &quot;id&quot;: &quot;T-218&quot;,
+      &quot;title&quot;: &quot;Cliffside Escape&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-477&quot;,
+      &quot;title&quot;: &quot;Island Hopper&quot;
+    }
+  ]
+}</code></pre></div></div></div></div><div class="tl-turn tl-assistant"><div class="tl-turn-head">🤖 Assistant</div><div class="tl-turn-body"><table class="tl-table"><thead><tr><th>Dimension</th><th><div class="tl-card"><div class="tl-card-title">Cliffside Escape</div></div></th><th><div class="tl-card"><div class="tl-card-title">Island Hopper</div></div></th></tr></thead><tbody><tr><td class="tl-dim">Pace</td><td><div class="tl-card"><div class="tl-card-title">Relaxed</div><div class="tl-card-body">2 stops per day</div><div class="tl-tags"><span class="tl-badge" style="color:#0a7f5b;background:#e6f7f1">easy</span></div></div></td><td><div class="tl-card"><div class="tl-card-title">Packed</div><div class="tl-card-body">5 stops per day</div><div class="tl-tags"><span class="tl-badge" style="color:#c0392b;background:#fdecea">intense</span></div></div></td></tr><tr><td class="tl-dim">Price</td><td><div class="tl-card"><div class="tl-card-title">$180</div></div></td><td><div class="tl-card"><div class="tl-card-title">$240</div><div class="tl-tags"><span class="tl-badge" style="color:#c0392b;background:#fdecea">pricey</span></div></div></td></tr><tr><td class="tl-dim">Best for</td><td><div class="tl-card"><div class="tl-card-title">Slow weekend</div></div></td><td><div class="tl-card"><div class="tl-card-title">Seeing more</div></div></td></tr></tbody></table><div class="tl-md"><p>Pick <strong>Cliffside Escape</strong> for a slow, scenic weekend; choose <strong>Island Hopper</strong> if you&#39;d rather see more in two days.</p></div></div></div></div></div>
+</div>
+<div class="tl-after"><h2 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);margin:0 0 8px">&#9314; Score &amp; feed back into the loop</h2><div class="tl-score"><div class="tl-score-head">Score · rubric <code>demo@v1</code></div><div class="tl-dim-row"><div class="tl-dim-label">Helpfulness<span class="tl-dim-desc">Did it actually answer the comparison?</span></div><div class="tl-opts"><button class="tl-opt">1</button><button class="tl-opt">2</button><button class="tl-opt">3</button><button class="tl-opt">4</button><button class="tl-opt">5</button></div></div><div class="tl-dim-row"><div class="tl-dim-label">Factual accuracy</div><div class="tl-opts"><button class="tl-opt">👍 Good</button><button class="tl-opt">👎 Bad</button></div></div><div class="tl-dim-row"><div class="tl-dim-label">Tone</div><div class="tl-opts"><button class="tl-opt">great</button><button class="tl-opt">ok</button><button class="tl-opt">off</button></div></div><textarea class="tl-comment" placeholder="Comment / corrected output — fed back into dataset &amp; judge-calibration…"></textarea><button class="tl-submit">Submit judgment →</button></div></div>
+<div class="tl-foot">tracelens · the human-judgment layer of the AI engineering loop</div>
+</div></body></html>

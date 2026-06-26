@@ -1,0 +1,12 @@
+{
+  "name": "@tracelens/core",
+  "version": "0.0.1",
+  "description": "tracelens core contracts — DataSource, Renderer, Rubric, FeedbackSink + ConversationView UI primitives. Zero runtime deps, pure types.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": ["src"],
+  "license": "MIT",
+  "author": "heqiu12345"
+}

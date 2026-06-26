@@ -1,0 +1,12 @@
+{
+  "name": "@tracelens/review-ui",
+  "version": "0.0.1",
+  "description": "Render a tracelens ConversationView + Rubric to HTML. Zero deps, pure functions.",
+  "type": "module",
+  "exports": {
+    ".": "./src/html.ts"
+  },
+  "files": ["src"],
+  "license": "MIT",
+  "author": "heqiu12345"
+}

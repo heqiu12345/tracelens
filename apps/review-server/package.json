@@ -1,0 +1,12 @@
+{
+  "name": "@tracelens/review-server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "End-to-end review app — connect Langfuse, browse/filter traces, render readable conversations, score against a rubric. Zero deps, zero build.",
+  "scripts": {
+    "start": "node src/server.ts"
+  },
+  "license": "MIT",
+  "author": "heqiu12345"
+}

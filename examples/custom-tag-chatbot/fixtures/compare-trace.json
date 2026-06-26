@@ -1,0 +1,20 @@
+{
+  "id": "trace-cmp-001",
+  "sessionId": "demo-session",
+  "userId": "demo-user",
+  "timestamp": "2026-06-24T03:00:00Z",
+  "tags": ["shopping-chatbot-v2"],
+  "raw": {
+    "turns": [
+      {
+        "role": "user",
+        "query": "Compare these two weekend trip packages."
+      },
+      {
+        "role": "assistant",
+        "replyAgent": "compare-agent",
+        "botResponse": "Here's a side-by-side comparison of the two packages.\n\n<table type=\"start\" /><row name=\"pin\" type=\"product\" values=[\"prod-15399\",\"prod-10218\"] /><row name=\"Duration\" type=\"block\" values=[{\"title\":\"3 Days\",\"text\":\"City + coast loop\",\"negative_tag\":\"Early start 05:00\"},{\"title\":\"4 Days\",\"text\":\"Adds an island day\"}] /><row name=\"Pace\" type=\"pace\" values=[{\"level\":\"packed\",\"label\":\"Packed\",\"text\":\"Back-to-back stops\"},{\"level\":\"relaxed\",\"label\":\"Relaxed\",\"text\":\"More breathing room\"}] /><table type=\"end\" />\n\nBoth are great picks depending on your pace."
+      }
+    ]
+  }
+}
